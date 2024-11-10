@@ -17,6 +17,7 @@ const useBetsList = () => {
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(5);
   const [totalItems, setTotalItems] = useState<number>(0);
+  const [first, setFirst] = useState<number>(0);
   const { toast, updateBalance } = useAuth();
   const queryClient = useQueryClient();
 
@@ -28,6 +29,7 @@ const useBetsList = () => {
   });
 
   const handleNextPageItems = (page: any) => {
+    setFirst(page.first);
     setPage(page.page + 1);
     setSize(page.rows);
   };
@@ -113,6 +115,7 @@ const useBetsList = () => {
       totalItems: betData.totalItems,
       handleNextPageItems,
       size: size,
+      first
     },
     toast,
     cancelBet: handleCancelBet,

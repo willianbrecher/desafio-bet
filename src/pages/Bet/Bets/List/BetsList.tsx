@@ -52,8 +52,9 @@ const BetsList: FC = () => {
         paginator
         rows={requests.size}
         lazy
+        first={requests.first}
         rowsPerPageOptions={[5, 10, 25, 50, 100]}
-        onPage={(page) => requests.handleNextPageItems(page)}
+        onPage={requests.handleNextPageItems}
         totalRecords={requests.totalItems}
       >
         <Column
