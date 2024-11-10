@@ -2,8 +2,6 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { PrimeReactProvider } from "primereact/api";
 
-
-import "./index.css";
 import Router from "./pages/Router.tsx";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { initApi } from "./utils/initApi.ts";

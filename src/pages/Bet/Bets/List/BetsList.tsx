@@ -1,19 +1,15 @@
 import { Button } from "primereact/button";
 import { FC } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
-import { useAuth } from "../../../../context/hooks/useAuth";
+import { Outlet } from "react-router-dom";
 import useBetsList from "./hooks/useBetsList";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import moment from "moment";
-import 'moment-timezone';
+import "moment-timezone";
 import { IBetPageableListItem } from "../../../../types/bet.types";
 import { Toast } from "primereact/toast";
 
 const BetsList: FC = () => {
-  const navigate = useNavigate();
-
-  const { user, logout } = useAuth();
   const { requests, newBet, cancelBet, toast } = useBetsList();
 
   const dateTemplate = (item: IBetPageableListItem) => {
@@ -21,19 +17,37 @@ const BetsList: FC = () => {
   };
 
   const actionTemplate = (item: IBetPageableListItem) => {
-    return item.status !== "canceled" ? <Button icon="pi pi-ban" severity="danger" label="Cancelar" raised onClick={() => cancelBet(item.id)}/> : <></>;
+    return item.status !== "canceled" ? (
+      <Button
+        size="small"
+        icon="pi pi-ban"
+        severity="danger"
+        label="Cancelar"
+        raised
+        onClick={() => cancelBet(item.id)}
+      />
+    ) : (
+      <></>
+    );
   };
 
   const winAmountTemplate = (item: IBetPageableListItem) => {
     return item.winAmount ? item.winAmount : 0;
-  };  
+  };
+
+  const renderHeader = () => {
+    return (
+      <div className="flex justify-content-between">
+        <Button label="Apostar" onClick={newBet} size="small"/>
+      </div>
+    );
+  };
 
   return (
     <>
       <Toast ref={toast} />
-      <Button label="Create" onClick={newBet} />
-      <Button label="Logout" onClick={() => logout()} />
       <DataTable
+        header={renderHeader}
         value={requests.items}
         paginator
         rows={requests.size}
@@ -49,7 +63,12 @@ const BetsList: FC = () => {
           body={dateTemplate}
         />
         <Column field="amount" header="Aposta" style={{ width: "25%" }} />
-        <Column field="winAmount" header="Ganho" style={{ width: "25%" }} body={winAmountTemplate}/>
+        <Column
+          field="winAmount"
+          header="Ganho"
+          style={{ width: "25%" }}
+          body={winAmountTemplate}
+        />
         <Column field="status" header="Resultado" style={{ width: "25%" }} />
         <Column header="Ações" style={{ width: "25%" }} body={actionTemplate} />
       </DataTable>

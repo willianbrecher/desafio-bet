@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { BetApi } from "../../../../../api/BetApi";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   IBetCanceled,
   IBetPageableList,
@@ -72,7 +72,6 @@ const useBetsList = () => {
   };
 
   const handleCancelBet = (id: string) => {
-    console.info(id);
     submitCancelMutation.mutate(id);
   };
 
@@ -104,7 +103,6 @@ const useBetsList = () => {
         "Ocorreu um erro ao cancelar a aposta! " + error.response.data.message,
       life: 10000,
     });
-    console.info(error);
   };
 
   return {

@@ -51,7 +51,6 @@ const useLogin = () => {
       detail: "Ocorreu um erro ao entrar! " + error.response.data.message,
       life: 10000,
     });
-    console.info(error);
   };
 
   return {

@@ -1,12 +1,11 @@
-import { createContext, FC, useRef, useState } from "react";
+import { createContext, useRef, useState } from "react";
 import { IUser } from "../types/auth.types";
-import { useNavigate } from "react-router-dom";
 import { Toast } from "primereact/toast";
 
 interface AuthContextValues {
   user?: IUser | null;
   token?: string | null;
-  balance?: string | null;
+  balance?: number | null;
   isAuthenticated: boolean;
   toast?: any | null;
   logout: () => void | null;
@@ -37,7 +36,7 @@ export const AuthProvider = (props: AuthProviderProps): JSX.Element => {
     JSON.parse(localStorage.getItem("logged_user") as string)
   );
 
-  const [balance, setBalance] = useState<string | null>(
+  const [balance, setBalance] = useState<number | null>(
     JSON.parse(localStorage.getItem("balance") as string)
   );
 
@@ -57,10 +56,11 @@ export const AuthProvider = (props: AuthProviderProps): JSX.Element => {
     localStorage.setItem("logged_user", JSON.stringify(user));
     setToken(user.accessToken);
     setUser(user);
+    setBalance(user.balance);
   };
 
   const updateBalance = (balance: number) => {
-    setBalance(balance.toString());
+    setBalance(balance);
     localStorage.setItem("balance", balance.toString());
   };
 

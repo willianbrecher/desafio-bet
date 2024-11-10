@@ -1,4 +1,4 @@
-import { FC, ReactNode } from "react";
+import { FC } from "react";
 import Register from "./Register/Register";
 import { Navigate, Route, Routes } from "react-router-dom";
 import Home from "./Home/Home";
@@ -13,19 +13,19 @@ const Router: FC = () => {
 
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
-      {isAuthenticated ? (
-        <Route element={<Layout />}>
+      <Route element={<Layout />}>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        {isAuthenticated ? (
           <>
             <Route path="/bets/*" element={<BetsRouter />} />
             <Route path="/wallet" element={<Wallet />} />
           </>
-        </Route>
-      ) : (
-        <Route path="*" element={<Navigate to="/login" />} />
-      )}
+        ) : (
+          <Route path="*" element={<Navigate to="/login" />} />
+        )}
+      </Route>
     </Routes>
   );
 };

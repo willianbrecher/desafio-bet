@@ -57,7 +57,6 @@ const useRegister = () => {
         error.response.data.message,
       life: 10000,
     });
-    console.info(error);
   };
 
   return {
